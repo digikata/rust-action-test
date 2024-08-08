@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  smoke_test:
+    name: Smoke test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-13, macos-latest]
+        rust: [stable]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install rust stable
+        uses: dtolnay/rust-toolchain@stable
+      - name: Build
+        run: cargo build
